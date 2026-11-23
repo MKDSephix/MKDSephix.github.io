@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#08131e">
+<link rel="icon" href="assets/favicon.webp" type="image/webp">
+<meta name="description" content="Retrouve MonkeyDSephix en live sur Twitch, et sur YouTube, TikTok et X. Tous les liens de l’équipage au même endroit.">
+<title>MonkeyDSephix · Rejoins l’équipage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Nuit en mer, bleu profond et or : la DA du Repaire. Colonne de récit à gauche, escales à droite. */
+  color-scheme:dark;
+  --nuit:#08131e;
+  --coque:#10202f;
+  --or:#e6bd71;
+  --or-vif:#ffd98c;
+  --cristal:#6fd8f0;
+  --brume:#a9b9c7;
+  --texte:#f4efe2;
+  --trait:#e6bd7133;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --titre:'Cinzel',Georgia,serif;
+  --corps:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--nuit);color:var(--texte);font:16px/1.6 var(--corps);min-height:100%;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cristal);outline-offset:4px;border-radius:10px}
+
+/* décor : l'horizon de fin de live pour les réseaux, la cabine floutée pour le setup */
+.decor{position:fixed;inset:0;z-index:-2;background:url('assets/horizon.webp') 62% center/cover no-repeat;transition:opacity .5s}
+.decor.cabine{background-image:url('assets/cabine.webp');background-position:70% center;filter:blur(9px) brightness(.75) saturate(1.1);transform:scale(1.08)}
+body.vue-setup .decor.horizon,body:not(.vue-setup) .decor.cabine{opacity:0}
+.decor:after{content:'';position:absolute;inset:0;background:
+  linear-gradient(90deg,#08131ef2 0%,#08131ecc 38%,#08131e99 62%,#08131ee6 100%),
+  linear-gradient(180deg,#08131e66 0%,transparent 30%,transparent 70%,#08131e 100%)}
+#ciel{position:fixed;inset:0;z-index:-1;pointer-events:none}
+
+header{max-width:1220px;margin:0 auto;padding:26px 32px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.marque{display:flex;align-items:center;gap:14px}
+.marque img{width:54px;height:54px;border-radius:50%;border:2px solid var(--or);box-shadow:0 0 0 3px #08131e,0 0 22px #6fd8f055}
+.marque strong{display:block;font:700 19px var(--titre);letter-spacing:.5px}
+.marque small{display:block;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--or)}
+.onglets{display:flex;gap:6px;padding:5px;border:1px solid var(--trait);border-radius:999px;background:#08131ecc}
+.onglets a{white-space:nowrap;font-size:13px;font-weight:700;color:var(--brume);padding:8px 16px;border-radius:999px;transition:color .2s,background .2s}
+.onglets a:hover{color:var(--or-vif)}
+.onglets a[aria-current="page"]{background:var(--or);color:#1a1208}
+.vue[hidden]{display:none}
+
+main{max-width:1220px;margin:0 auto;padding:48px 32px 40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:64px;align-items:start}
+
+.recit{padding-top:24px;display:flex;flex-direction:column;gap:22px}
+.eyebrow{display:flex;align-items:center;gap:12px;font:700 12px var(--titre);letter-spacing:3px;text-transform:uppercase;color:var(--or)}
+.eyebrow:before{content:'';width:30px;height:1px;background:var(--or)}
+h1{margin:0;font:500 clamp(44px,5.4vw,74px)/1.04 var(--display);letter-spacing:-1.5px;text-wrap:balance}
+h1 em{font-style:italic;color:var(--or-vif)}
+.lead{margin:0;max-width:30em;color:#c6d1da;font-size:17px}
+.devise{margin:0;padding:14px 18px;border-left:3px solid var(--or);background:linear-gradient(90deg,#e6bd7114,transparent);font:italic 500 19px/1.45 var(--display);color:var(--or-vif);max-width:30em}
+
+.carnet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:520px}
+.case{padding:16px 18px;border:1px solid var(--trait);border-radius:12px;background:#0c1b29cc}
+.case b{display:block;font:700 11px var(--titre);letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:4px}
+.case span{font-size:15px;font-weight:600}
+.case em{display:block;font-style:normal;font-size:13px;color:var(--brume)}
+.jeux{display:flex;flex-wrap:wrap;gap:8px;grid-column:1/-1}
+.jeu{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;border:1px solid #6fd8f044;background:#6fd8f00d;font-size:13px;font-weight:600}
+.jeu i{font-style:normal;font-size:11px;letter-spacing:1px;color:var(--cristal)}
+
+/* colonne des escales */
+.escales{display:flex;flex-direction:column;gap:14px}
+.banniere{display:block;width:100%;max-width:560px;height:auto;margin:-6px auto 4px;filter:drop-shadow(0 18px 30px #000a) drop-shadow(0 0 30px #3b82f633);animation:flotte 7s ease-in-out infinite}
+@keyframes flotte{50%{transform:translateY(-6px)}}
+.label{margin:0 0 2px;font:700 12px var(--titre);letter-spacing:2.5px;text-transform:uppercase;color:var(--brume)}
+
+.escale{--teinte:var(--or);position:relative;display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:18px;padding:20px 22px;border:1px solid var(--trait);border-radius:14px;
+  background:linear-gradient(120deg,#16293bf0,#0e1d2cf0);box-shadow:0 10px 28px #0006;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.escale:before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teinte);opacity:.8}
+.escale:hover{transform:translateY(-3px);border-color:var(--teinte);box-shadow:0 14px 34px #0008,0 0 0 1px var(--teinte),0 0 30px color-mix(in srgb,var(--teinte) 25%,transparent)}
+.escale .ico{display:grid;place-items:center;width:56px;height:56px;border-radius:14px;background:color-mix(in srgb,var(--teinte) 14%,transparent);color:var(--teinte)}
+.escale .ico svg{width:28px;height:28px;fill:currentColor}
+.escale strong{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font:700 21px var(--corps);letter-spacing:-.3px}
+.escale strong small{font-size:13px;font-weight:600;color:var(--brume)}
+.escale p{margin:2px 0 0;color:var(--brume);font-size:14px}
+.escale .pseudo{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--cristal)}
+.escale .fleche{font-size:24px;color:var(--teinte);transition:transform .2s}
+.escale:hover .fleche{transform:translate(3px,-3px)}
+.escale.twitch{--teinte:#a970ff;background:linear-gradient(120deg,#22184af0,#121a33f0)}
+.escale.youtube{--teinte:#ff5a5a}
+.escale.tiktok{--teinte:#5ff0e6}
+.escale.x{--teinte:#e8e8e8}
+.direct{display:inline-flex;align-items:center;gap:7px;padding:3px 10px;border-radius:999px;background:#a970ff26;color:#d9c4ff;font:800 11px var(--corps);letter-spacing:1.5px;text-transform:uppercase}
+.direct:before{content:'';width:7px;height:7px;border-radius:50%;background:#ff4d6d;box-shadow:0 0 10px #ff4d6d;animation:pouls 1.8s infinite}
+@keyframes pouls{50%{opacity:.35}}
+
+.merci{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px;padding-top:18px;border-top:1px solid var(--trait)}
+.merci p{margin:0;font-size:14px;color:var(--brume)}
+.merci p b{color:var(--or-vif);font-weight:600}
+.ancre{font-size:28px;color:var(--cristal);animation:balance 4s ease-in-out infinite;transform-origin:50% 0}
+@keyframes balance{50%{transform:rotate(8deg)}}
+
+footer{max-width:1220px;margin:0 auto;padding:10px 32px 30px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--brume)}
+footer button{all:unset;cursor:pointer;color:var(--brume)}
+footer button:hover{color:var(--or-vif)}
+.banane{display:inline-block;transition:transform .4s}
+.banane.tourne{transform:rotate(360deg) scale(1.4)}
+
+
+/* ===== vue setup ===== */
+.setup-vue{max-width:1220px;margin:0 auto;padding:40px 32px 40px;display:flex;flex-direction:column;gap:56px}
+.s-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.s-hero .recit{padding-top:0}
+.chiffres{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.chiffre{padding:18px 20px;border:1px solid var(--trait);border-radius:12px;background:#0c1b29d9}
+.chiffre b{display:block;font:700 26px var(--corps);letter-spacing:-.5px;color:var(--texte);font-variant-numeric:tabular-nums}
+.chiffre span{font-size:13px;color:var(--brume)}
+.bloc{display:flex;flex-direction:column;gap:22px}
+.bloc-tete{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.bloc-tete h2{margin:6px 0 0;font:500 clamp(30px,3.4vw,42px)/1.1 var(--display);letter-spacing:-.5px;text-wrap:balance}
+.bloc-tete p{margin:0;max-width:34em;color:var(--brume)}
+.manifeste{border:1px solid var(--trait);border-radius:14px;overflow:hidden;background:#0c1b29e6}
+.manifeste .ligne{display:grid;grid-template-columns:200px minmax(0,1fr) auto;gap:20px;align-items:center;padding:16px 22px;border-top:1px solid #ffffff10}
+.manifeste .ligne:first-child{border-top:0}
+.manifeste .ligne:nth-child(-n+2){background:linear-gradient(90deg,#e6bd7114,transparent 70%)}
+.manifeste dt{font:700 12px var(--titre);letter-spacing:2px;text-transform:uppercase;color:var(--or)}
+.manifeste dd{margin:0;font-weight:700;font-size:16px}
+.manifeste dd small{display:block;font-weight:400;font-size:13px;color:var(--brume)}
+.manifeste .num{font:600 12px var(--corps);color:#e6bd7188;font-variant-numeric:tabular-nums}
+.pont{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.poste{display:flex;flex-direction:column;gap:8px;padding:22px;border:1px solid var(--trait);border-radius:14px;background:linear-gradient(160deg,#16293bf0,#0e1d2cf0)}
+.poste .ico{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:#6fd8f014;color:var(--cristal);font-size:22px}
+.poste b{font:700 11px var(--titre);letter-spacing:2px;text-transform:uppercase;color:var(--or)}
+.poste strong{font-size:18px}
+.poste p{margin:0;font-size:14px;color:var(--brume)}
+.poste.maison{border-color:#6fd8f055;background:linear-gradient(160deg,#10304a,#0e1d2c)}
+.inventaire{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:28px 30px;border:1px solid var(--or);border-radius:16px;background:linear-gradient(120deg,#2a1f12e6,#13202ee6)}
+.inventaire h2{margin:4px 0 0;font:500 30px/1.15 var(--display)}
+.inventaire h2 em{color:var(--or-vif)}
+.inventaire p{margin:6px 0 0;color:var(--brume);font-size:14px}
+.copier{appearance:none;border:0;cursor:pointer;padding:14px 22px;border-radius:999px;background:var(--or);color:#1a1208;font:800 15px var(--corps);box-shadow:0 8px 22px #0008;transition:transform .2s,background .2s}
+.copier:hover{transform:translateY(-2px);background:var(--or-vif)}
+.copie-ok{font-size:13px;color:var(--cristal);min-height:1.2em}
+@media (max-width:900px){
+  .setup-vue{padding:24px 20px 30px;gap:40px}
+  .s-hero{grid-template-columns:1fr;gap:24px}
+  .chiffres,.pont{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .manifeste .ligne{grid-template-columns:1fr auto;gap:4px 14px}
+  .manifeste dt{grid-column:1/-1}
+}
+@media (max-width:420px){.chiffres,.pont{grid-template-columns:1fr}.poste.maison{grid-column:auto!important}.onglets a{padding:7px 12px}}
+@media (max-width:900px){
+  main{grid-template-columns:1fr;gap:34px;padding:28px 20px 30px;max-width:620px}
+  header{padding:20px 20px 0}
+  .recit{padding-top:0}
+  .decor{background-position:70% top}
+  .decor:after{background:linear-gradient(180deg,#08131eb3 0%,#08131ef2 45%,#08131e 100%)}
+  footer{padding:10px 20px 26px}
+}
+@media (max-width:420px){
+  .carnet{grid-template-columns:1fr}
+  .escale{grid-template-columns:46px minmax(0,1fr) auto;gap:14px;padding:16px}
+  .escale .ico{width:46px;height:46px}
+  .setup{padding:8px 12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="decor horizon" aria-hidden="true"></div><div class="decor cabine" aria-hidden="true"></div>
+<canvas id="ciel" aria-hidden="true"></canvas>
+
+<header>
+  <a class="marque" href="#">
+    <img src="assets/capitaine.webp" alt="Le mage bleu et or, mascotte de MonkeyDSephix" width="54" height="54">
+    <span><strong>MonkeyDSephix</strong><small>Capitaine de l’équipage</small></span>
+  </a>
+  <nav class="onglets" aria-label="Pages"><a href="#reseaux" id="o-reseaux">Réseaux</a><a href="#setup" id="o-setup">Mon setup</a></nav>
+</header>
+
+<main class="vue" id="v-reseaux">
+  <section class="recit">
+    <div class="eyebrow">Les escales de l’équipage</div>
+    <h1>L’aventure continue <em>ici.</em></h1>
+    <p class="lead">On se retrouve en live le soir, et entre deux lives sur mes réseaux. Choisis ton escale, l’équipage t’attend.</p>
+    <p class="devise">« Calme dans la tête, sans pitié dans la game. »</p>
+    <div class="carnet">
+      <div class="case"><b>Les lives</b><span>3 soirs par semaine</span><em>de 20 h à 23 h, sur Twitch</em></div>
+      <div class="case"><b>Les vidéos</b><span>Chaque samedi</span><em>et une surprise dans la semaine</em></div>
+      <div class="jeux" aria-label="Jeux du moment">
+        <span class="jeu">League of Legends <i>ADC</i></span>
+        <span class="jeu">Rainbow Six Siege</span>
+        <span class="jeu">Star Citizen <i>missions</i></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="escales" aria-label="Mes réseaux">
+    <img class="banniere" src="assets/reseaux.webp" alt="Réseaux" width="1024" height="346">
+    <p class="label">Quatre escales, un seul équipage</p>
+
+    <a class="escale twitch" href="https://www.twitch.tv/mkdsephix" target="_blank" rel="noopener noreferrer">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.3 2 3 5.4V19h4.6v2.5h2.6L12.7 19h3.7l5-5V2H4.3Zm15.4 11.2-2.8 2.9h-4.6l-2.5 2.4v-2.4H6V3.7h13.7v9.5ZM16.9 6.9h-1.7v5h1.7v-5Zm-4.6 0h-1.7v5h1.7v-5Z"/></svg></span>
+      <span><strong>Twitch <span class="direct">Le QG</span></strong><p>Les lives, le chat, les alertes et les tournées à la taverne</p><span class="pseudo">twitch.tv/mkdsephix</span></span>
+      <span class="fleche" aria-hidden="true">↗</span>
+    </a>
+    <a class="escale youtube" href="https://www.youtube.com/@MKDSephix" target="_blank" rel="noopener noreferrer">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 7s-.2-1.5-.8-2.2c-.8-.8-1.6-.8-2-.9C16.4 3.7 12 3.7 12 3.7s-4.4 0-7.2.2c-.4.1-1.2.1-2 .9C2.2 5.5 2 7 2 7s-.3 1.8-.3 3.6v1.7c0 1.8.3 3.6.3 3.6s.2 1.5.8 2.2c.8.8 1.8.8 2.3.9 1.7.2 6.9.3 6.9.3s4.4 0 7.2-.3c.4 0 1.2-.1 2-.9.6-.7.8-2.2.8-2.2s.3-1.8.3-3.6v-1.7C22.3 8.8 22 7 22 7ZM10 15V8l6 3.5Z"/></svg></span>
+      <span><strong>YouTube</strong><p>La vidéo du samedi, les meilleurs moments du live</p><span class="pseudo">@MKDSephix</span></span>
+      <span class="fleche" aria-hidden="true">↗</span>
+    </a>
+    <a class="escale tiktok" href="https://www.tiktok.com/@mkdsephix" target="_blank" rel="noopener noreferrer">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 2h-4v13.5a3 3 0 1 1-2-2.8v-4a7 7 0 1 0 6 6.8V8.7c1.7 1.1 3.1 1.6 5 1.6v-4c-3 0-5-2-5-4.3Z"/></svg></span>
+      <span><strong>TikTok</strong><p>Une dose de gaming à emporter, en moins d’une minute</p><span class="pseudo">@mkdsephix</span></span>
+      <span class="fleche" aria-hidden="true">↗</span>
+    </a>
+    <a class="escale x" href="https://x.com/MKDSephix" target="_blank" rel="noopener noreferrer">
+      <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.5 22H2.3l8.2-9.4L.8 2h6.4l4.5 6.8L18.9 2ZM17.6 20h2.1L6.1 4H4Z"/></svg></span>
+      <span><strong>X <small>/ Twitter</small></strong><p>Les annonces de live et les nouvelles du bord</p><span class="pseudo">@MKDSephix</span></span>
+      <span class="fleche" aria-hidden="true">↗</span>
+    </a>
+
+    <div class="merci">
+      <p>Un follow, un partage, un petit mot…<br><b>Merci de faire partie de l’aventure.</b><br><a href="#setup" style="color:var(--cristal);font-weight:600">Voir le setup du capitaine →</a></p>
+      <span class="ancre" aria-hidden="true">⚓</span>
+    </div>
+  </section>
+</main>
+
+<div class="vue setup-vue" id="v-setup" hidden>
+  <section class="s-hero">
+    <div class="recit">
+      <div class="eyebrow">Dans les coulisses du live</div>
+      <h1>Le setup du <em>capitaine.</em></h1>
+      <p class="lead">Du PC au matériel de stream, voici tout ce qui tourne quand on est en live. Les références sont copiables en bas de page.</p>
+    </div>
+    <img class="banniere" src="assets/setup.webp" alt="Mon setup" width="1024" height="346">
+  </section>
+
+  <div class="chiffres" aria-label="Le setup en bref">
+    <div class="chiffre"><b>RTX 5080</b><span>Palit GeForce · 16 Go</span></div>
+    <div class="chiffre"><b>9800X3D</b><span>AMD Ryzen 7 · AM5</span></div>
+    <div class="chiffre"><b>32 Go</b><span>Mémoire DDR5</span></div>
+    <div class="chiffre"><b>990 EVO Plus</b><span>SSD NVMe Samsung</span></div>
+  </div>
+
+  <section class="bloc" id="pc">
+    <div class="bloc-tete">
+      <div><div class="eyebrow">01 · La salle des machines</div><h2>Ce qui fait tourner les jeux.</h2></div>
+      <p>Les pièces maîtresses de la machine.</p>
+    </div>
+    <dl class="manifeste">
+      <div class="ligne"><dt>Carte graphique</dt><dd>Palit GeForce RTX 5080<small>16 Go de mémoire vidéo</small></dd><span class="num">01</span></div>
+      <div class="ligne"><dt>Processeur</dt><dd>AMD Ryzen 7 9800X3D<small>Le cœur du PC gaming</small></dd><span class="num">02</span></div>
+      <div class="ligne"><dt>Carte mère</dt><dd>ASUS Prime B850-Plus</dd><span class="num">03</span></div>
+      <div class="ligne"><dt>Mémoire vive</dt><dd>32 Go DDR5</dd><span class="num">04</span></div>
+      <div class="ligne"><dt>Stockage</dt><dd>Samsung 990 EVO Plus<small>SSD NVMe</small></dd><span class="num">05</span></div>
+    </dl>
+  </section>
+
+  <section class="bloc" id="stream">
+    <div class="bloc-tete">
+      <div><div class="eyebrow">02 · En direct du pont</div><h2>De l’autre côté de l’écran.</h2></div>
+      <p>Micro, son, caméra, lumière, et les scènes qui habillent chaque live.</p>
+    </div>
+    <div class="pont">
+      <div class="poste"><span class="ico" aria-hidden="true">🎙</span><b>Micro</b><strong>RØDE PodMic</strong><p>Le micro dynamique, pour une voix chaude et sans bruit de fond.</p></div>
+      <div class="poste"><span class="ico" aria-hidden="true">🎚</span><b>Interface audio</b><strong>Elgato Wave XLR Pro</strong><p>Le préampli et la table de mixage du son en live.</p></div>
+      <div class="poste"><span class="ico" aria-hidden="true">▦</span><b>Contrôle du live</b><strong>Elgato Stream Deck Scissor Keys</strong><p>15 touches pour les scènes, les sons et le chat.</p></div>
+      <div class="poste"><span class="ico" aria-hidden="true">⏺</span><b>Capture vidéo</b><strong>Elgato 4K X</strong><p>Le boîtier de capture de l’installation.</p></div>
+      <div class="poste"><span class="ico" aria-hidden="true">◉</span><b>Caméra</b><strong>Elgato Facecam 4K</strong><p>Pour partager les réactions et les meilleurs moments.</p></div>
+      <div class="poste"><span class="ico" aria-hidden="true">✦</span><b>Lumière</b><strong>Éclairage Elgato</strong><p>La lumière qui complète l’espace de stream.</p></div>
+      <div class="poste maison" style="grid-column:span 2"><span class="ico" aria-hidden="true">⚓</span><b>Aux commandes</b><strong>OBS Studio + Streamlabs</strong><p>Scènes faites maison : la cabine du Repaire, la Station pour Star Citizen, et la taverne où le chat trinque avec <em>!tchin</em>.</p></div>
+    </div>
+  </section>
+
+  <section class="inventaire">
+    <div>
+      <div class="eyebrow">Inventaire de bord</div>
+      <h2>Le matos est prêt. <em>Le skill se télécharge encore.</em></h2>
+      <p>Tu veux les références exactes ? Copie la liste complète en un clic.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+      <button type="button" class="copier" id="copier">Copier mon setup</button>
+      <span class="copie-ok" id="copie-ok" role="status"></span>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <span>© MonkeyDSephix · Bienvenue à bord.</span>
+  <span>Bleu, or, et toujours une <button type="button" id="banane" aria-label="Faire tourner la banane"><span class="banane">🍌</span></button> à portée de main.</span>
+</footer>
+
+<script>
+(function () {
+  // ciel étoilé et lucioles, discret et léger
+  var cv = document.getElementById('ciel'), ctx = cv.getContext('2d'), P = [], W, H;
+  var calme = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function taille() {
+    var r = window.devicePixelRatio || 1; W = innerWidth; H = innerHeight;
+    cv.width = W * r; cv.height = H * r; cv.style.width = W + 'px'; cv.style.height = H + 'px'; ctx.setTransform(r, 0, 0, r, 0, 0);
+    P = [];
+    for (var i = 0; i < Math.round(W * H / 14000); i++) P.push({ k: 'e', x: Math.random() * W, y: Math.random() * H * .45, r: .4 + Math.random() * 1.2, p: Math.random() * 6, v: .5 + Math.random() });
+    for (i = 0; i < Math.round(W / 70); i++) P.push({ k: 'l', x: Math.random() * W, y: H * .55 + Math.random() * H * .45, r: 1.2 + Math.random() * 1.6, p: Math.random() * 6, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .2 });
+  }
+  function dessine(t) {
+    ctx.clearRect(0, 0, W, H);
+    P.forEach(function (q) {
+      var a;
+      if (q.k === 'e') { a = .2 + .7 * Math.abs(Math.sin(t / 1000 * q.v * .6 + q.p)); ctx.fillStyle = '#ffffff'; ctx.shadowBlur = 0; }
+      else { q.x += q.vx + Math.sin(t / 1700 + q.p) * .3; q.y += q.vy + Math.cos(t / 2100 + q.p) * .25;
+        if (q.x < -10) q.x = W + 10; if (q.x > W + 10) q.x = -10; if (q.y < H * .5) q.y = H; if (q.y > H + 10) q.y = H * .55;
+        a = .15 + .7 * Math.max(0, Math.sin(t / 900 + q.p)); ctx.fillStyle = '#ffd98c'; ctx.shadowColor = '#ffcf6b'; ctx.shadowBlur = 10; }
+      ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 7); ctx.fill();
+    });
+    ctx.shadowBlur = 0;
+    if (!calme) requestAnimationFrame(dessine);
+  }
+  taille(); addEventListener('resize', taille); requestAnimationFrame(dessine);
+
+
+  // deux pages dans une : #reseaux et #setup
+  function vue() {
+    var h = location.hash.slice(1), setup = h === 'setup' || h === 'pc' || h === 'stream';
+    document.getElementById('v-reseaux').hidden = setup; document.getElementById('v-setup').hidden = !setup;
+    document.body.classList.toggle('vue-setup', setup);
+    document.getElementById('o-reseaux').setAttribute('aria-current', setup ? 'false' : 'page');
+    document.getElementById('o-setup').setAttribute('aria-current', setup ? 'page' : 'false');
+    document.title = setup ? 'Le setup du capitaine · MonkeyDSephix' : 'MonkeyDSephix · Rejoins l’équipage';
+    if (h === 'setup' || h === 'reseaux' || !h) scrollTo(0, 0);
+  }
+  addEventListener('hashchange', vue); vue();
+
+  // copier la liste du setup
+  var LISTE = ['Le setup du capitaine · MonkeyDSephix', '',
+    'PC', 'Carte graphique : Palit GeForce RTX 5080 (16 Go)', 'Processeur : AMD Ryzen 7 9800X3D', 'Carte mère : ASUS Prime B850-Plus',
+    'Mémoire : 32 Go DDR5', 'Stockage : SSD NVMe Samsung 990 EVO Plus', '',
+    'Stream', 'Micro : RØDE PodMic', 'Interface audio : Elgato Wave XLR Pro', 'Contrôle : Elgato Stream Deck Scissor Keys', 'Capture : Elgato 4K X', 'Caméra : Elgato Facecam 4K', 'Lumière : éclairage Elgato', 'Logiciels : OBS Studio + alertes Streamlabs', '',
+    'twitch.tv/mkdsephix'].join('\n');
+  document.getElementById('copier').addEventListener('click', function () {
+    var ok = document.getElementById('copie-ok');
+    try { navigator.clipboard.writeText(LISTE).then(function () { ok.textContent = 'Copié ! Colle-le où tu veux.'; }, function () { ok.textContent = 'La copie est bloquée ici, sélectionne la liste à la main.'; }); }
+    catch (e) { ok.textContent = 'La copie est bloquée ici, sélectionne la liste à la main.'; }
+  });
+
+  // la banane, évidemment
+  var b = document.getElementById('banane'), s = b.querySelector('.banane');
+  b.addEventListener('click', function () { s.classList.remove('tourne'); void s.offsetWidth; s.classList.add('tourne'); });
+})();
+</script>
+</body>
+</html>
