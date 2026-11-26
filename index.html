@@ -150,7 +150,7 @@ footer button:hover{color:var(--or-vif)}
 .salle{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:22px;align-items:stretch}
 .salle .manifeste .ligne{grid-template-columns:150px minmax(0,1fr) auto}
 .vitrine{position:relative;min-height:500px;border:1px solid var(--trait);border-radius:14px;overflow:hidden;perspective:1300px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;outline:none;
-  background:radial-gradient(ellipse 60% 50% at 50% 48%,#6fd8f022,transparent 70%),linear-gradient(180deg,#10233466,#08131ef2),#0b1724}
+  background:radial-gradient(ellipse 60% 50% at 50% 48%,#b44dff24,transparent 70%),linear-gradient(180deg,#10233466,#08131ef2),#0b1724}
 .vitrine:focus-visible{box-shadow:0 0 0 2px var(--cristal)}
 .vitrine.saisi{cursor:grabbing}
 .scene3d{position:absolute;left:50%;top:45%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
@@ -170,8 +170,9 @@ footer button:hover{color:var(--or-vif)}
 .v-info b{color:var(--or);font:700 11px var(--titre);letter-spacing:1.5px;text-transform:uppercase;margin-right:6px}
 .v-info.vide{opacity:.75;color:var(--brume);border-color:var(--trait)}
 /* matières */
-.ventilo{position:absolute;border-radius:50%;border:3px solid var(--rgb,#6fd8f0);background:radial-gradient(circle,#0d141b 0 55%,#121c26);box-shadow:0 0 14px var(--rgb,#6fd8f0),inset 0 0 12px var(--rgb,#6fd8f0)}
-.helice{position:absolute;inset:9%;border-radius:50%;background:radial-gradient(circle,#2b3947 0 17%,#0000 18%),repeating-conic-gradient(from 0deg,#24313d 0 26deg,#0000 26deg 51.43deg);animation:tourne 1.1s linear infinite}
+.ventilo{position:absolute;border-radius:17%;border:2px solid #262330;background:#0b0a10;box-shadow:0 0 18px color-mix(in srgb,var(--rgb,#b44dff) 55%,transparent)}
+.ventilo:before{content:'';position:absolute;inset:5%;border-radius:50%;border:3px solid var(--rgb,#b44dff);box-shadow:0 0 12px var(--rgb,#b44dff),inset 0 0 14px var(--rgb,#b44dff)}
+.helice{position:absolute;inset:13%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--rgb,#b44dff) 70%,#fff) 0 14%,#0000 24%),repeating-conic-gradient(from 0deg,#2a2633 0 26deg,#0000 26deg 51.43deg);animation:tourne 1.1s linear infinite}
 @keyframes tourne{to{transform:rotate(360deg)}}
 .maille{position:absolute;inset:0;background:radial-gradient(circle,#05090dcc 1.3px,#0000 1.7px) 0 0/5px 5px}
 .vitre{pointer-events:none;border:7px solid #0a0f15;border-radius:4px;background:linear-gradient(118deg,#ffffff1c 0%,#9fd6f00a 28%,#0000 45%,#ffffff12 58%,#9fd6f008 72%,#ffffff14 100%)}
@@ -440,46 +441,51 @@ footer button:hover{color:var(--or-vif)}
     return faces;
   }
 
-  // ---- le boîtier (Elite 600) : façade à droite (x+), vitre vers toi (z+)
-  var W = 300, H = 330, D = 150;
-  var boitier = boite({ w: W, h: H, d: D, nom: 'Boîtier|Cooler Master Elite 600', sans: [],
-    fond: { ar: 'radial-gradient(circle at 65% 40%,#6fd8f026,#0000 60%),#0b1118', g: '#0f161d', h: '#121a22cc', b: '#0b1015', dr: '#0a0f14e6' } });
-  boitier.av.className = 'face vitre'; boitier.av.style.background = '';
-  // façade mesh + 3 ventilos ARGB
-  [22, 118, 214].forEach(function (y) { ventilo(boitier.dr, 33, y, 84); });
-  el('div', 'maille', boitier.dr); boitier.dr.setAttribute('data-nom', 'Façade|Mesh et ventilateurs ARGB');
-  // dessus : grille
-  el('div', 'maille', boitier.h);
-  // dos : ventilo d'extraction, I/O, équerres PCIe, alimentation
-  ventilo(boitier.g, 33, 28, 84);
-  var io = el('div', '', boitier.g); io.style.cssText = 'position:absolute;left:96px;top:40px;width:34px;height:110px;background:repeating-linear-gradient(180deg,#2a3540 0 6px,#0b1015 6px 12px);border-radius:3px';
-  var pcie = el('div', '', boitier.g); pcie.style.cssText = 'position:absolute;left:20px;top:165px;width:110px;height:78px;background:repeating-linear-gradient(180deg,#26313b 0 7px,#0b1015 7px 10px)';
-  var psu = el('div', '', boitier.g); psu.style.cssText = 'position:absolute;left:25px;top:262px;width:100px;height:56px;border-radius:4px;background:radial-gradient(circle,#05090d 1.4px,#0000 1.8px) 0 0/6px 6px,#1d2731';
-  boitier.g.setAttribute('data-nom', 'Arrière|Ventilateur d’extraction et connectique');
+  // ---- le boîtier panoramique : façade vitrée à droite (x+), vitre latérale vers toi (z+), chambre arrière (z−) pour l'alimentation
+  var W = 300, H = 300, D = 220, MUR = -42;
+  var VIO = '#b44dff', ROSE = '#ff4fd8';
+  var boitier = boite({ w: W, h: H, d: D, nom: 'Boîtier|Cooler Master Elite 600',
+    fond: { ar: '#0c0b10', g: '#16161b', h: 'linear-gradient(90deg,#0000 0 30%,#05050899 30% 70%,#0000 70%),#141419', b: '#0e0e12' } });
+  [boitier.av, boitier.dr].forEach(function (f) { f.className = 'face vitre'; f.style.background = ''; });
+  // dos : alimentation à gauche (chambre arrière), I/O au centre, ventilo d'extraction à droite, équerres PCIe en bas
+  function zone(f, css) { var z = el('div', '', f); z.style.cssText = 'position:absolute;' + css; return z; }
+  var dos = boitier.g, hexa = 'radial-gradient(circle,#000 2.1px,#0000 2.6px) 0 0/7px 6px';
+  zone(dos, 'left:12px;top:10px;width:50px;height:26px;background:' + hexa + ',#26262d;border-radius:3px');
+  zone(dos, 'left:78px;top:10px;width:130px;height:26px;background:' + hexa + ',linear-gradient(90deg,' + VIO + '66,' + ROSE + '55,#ffb34766);border-radius:3px');
+  zone(dos, 'left:10px;top:50px;width:58px;height:175px;background:' + hexa + ',#202027;border-radius:3px');
+  zone(dos, 'left:22px;top:62px;width:22px;height:16px;background:#050507;border-radius:2px');
+  zone(dos, 'left:80px;top:52px;width:30px;height:150px;background:repeating-linear-gradient(180deg,#30303a 0 7px,#0a0a0d 7px 13px);border-radius:3px');
+  ventilo(dos, 120, 54, 84, VIO); zone(dos, 'left:120px;top:54px;width:84px;height:84px;background:' + hexa);
+  zone(dos, 'left:80px;top:212px;width:125px;height:68px;background:repeating-linear-gradient(180deg,#26262e 0 9px,#0a0a0d 9px 13px)');
+  dos.setAttribute('data-nom', 'Arrière|Alimentation, connectique et ventilateur d’extraction');
 
   // ---- l'intérieur
-  var mobo = boite({ x: -40, y: -64, z: -64, w: 213, h: 172, d: 4, nom: 'Carte mère|ASUS TUF Gaming B850-PLUS WIFI', sans: ['ar'],
-    fond: { av: 'linear-gradient(90deg,#0000 0 63%,#2a333c 63% 66%,#0000 66%),repeating-linear-gradient(0deg,#0000 0 22px,#ffffff08 22px 23px),linear-gradient(180deg,#2d3843 0 16%,#151d25 16%)', tout: '#11181f' } });
-  boite({ x: -66, y: -96, z: -52, w: 44, h: 44, d: 18, nom: 'Processeur|AMD Ryzen 7 9800X3D (sous la pompe du watercooling)',
-    fond: { av: 'radial-gradient(circle,#0000 0 40%,' + OR + ' 42% 47%,#0000 50%),radial-gradient(circle,#ffd98c55,#0000 70%),#141c24', tout: '#1d2731' } });
-  [-12, -4].forEach(function (x) {
-    boite({ x: x, y: -82, z: -50, w: 5, h: 94, d: 24, nom: 'Mémoire vive|Lexar 32 Go DDR5',
-      fond: { av: OR, tout: '#2a3440' } }).av.style.boxShadow = '0 0 10px ' + OR;
+  boite({ x: W / 2 - 4, y: 0, z: (MUR - D / 2) / 2, w: 2, h: H - 4, d: -MUR + D / 2 - 6 + 4, nom: 'Boîtier|Chambre arrière : alimentation et câbles', sans: ['av', 'ar', 'h', 'b'], fond: { dr: 'linear-gradient(180deg,#17171d,#0e0e12)', g: '#0e0e12' } });
+  boite({ x: 0, y: 0, z: MUR - 2, w: W - 6, h: H - 6, d: 2, sans: ['ar', 'h', 'b', 'g', 'dr'], fond: { av: 'radial-gradient(ellipse at 45% 40%,' + VIO + '33,#0000 65%),#0b0a0f' } });
+  boite({ x: -33, y: -40, z: MUR + 2, w: 213, h: 172, d: 4, nom: 'Carte mère|ASUS TUF Gaming B850-PLUS WIFI', sans: ['ar'],
+    fond: { av: 'linear-gradient(90deg,#0000 0 64%,#3a3a44 64% 67%,#0000 67%),repeating-linear-gradient(0deg,#0000 0 22px,#ffffff07 22px 23px),linear-gradient(180deg,#30303a 0 15%,#18181e 15%)', tout: '#121217' } });
+  var pompe = boite({ x: -62, y: -78, z: MUR + 14, w: 50, h: 50, d: 20, nom: 'Processeur|AMD Ryzen 7 9800X3D (sous la pompe du watercooling)', sans: ['h', 'b', 'g', 'dr'],
+    fond: { av: 'radial-gradient(ellipse 60% 18% at 55% 46%,#2a0d2e 0 60%,#0000 64%),linear-gradient(135deg,' + VIO + ',' + ROSE + ' 50%,#ff8a3d)', tout: '#16161c' } });
+  pompe.av.style.borderRadius = '50%'; pompe.av.style.boxShadow = '0 0 22px ' + ROSE + '99'; pompe.ar.style.borderRadius = '50%';
+  [-6, 2].forEach(function (x) {
+    boite({ x: x, y: -64, z: MUR + 14, w: 6, h: 94, d: 24, nom: 'Mémoire vive|Lexar 32 Go DDR5', fond: { av: '#f4f1ff', tout: 'linear-gradient(180deg,#d9dbe2,#9a9ca6)' } }).av.style.boxShadow = '0 0 12px #e9dcff';
   });
-  boite({ x: -66, y: -32, z: -60, w: 56, h: 15, d: 3, nom: 'Stockage|SSD Samsung 990 EVO 1 To',
-    fond: { av: 'linear-gradient(90deg,#1b1f24 0 18%,#2c3a48 18% 75%,#c7cdd3 75% 82%,#1b1f24 82%)', tout: '#11161b' } });
-  var gpu = boite({ x: -40, y: 12, z: -18, w: 213, h: 38, d: 88, nom: 'Carte graphique|AMD Radeon RX 9070 XT 16 Go',
-    fond: { av: 'linear-gradient(180deg,#2b3540,#141b22)', h: 'repeating-linear-gradient(90deg,#1f2830 0 10px,#222c35 10px 12px)', b: '#0e141a', tout: '#1a222a' } });
-  var bande = el('div', '', gpu.av); bande.style.cssText = 'position:absolute;left:0;right:0;bottom:6px;height:3px;background:' + CYAN + ';box-shadow:0 0 10px ' + CYAN;
-  var nomGpu = el('span', 'etiquette', gpu.av); nomGpu.textContent = 'RX 9070 XT'; nomGpu.style.cssText += ';right:14px;top:9px';
-  [8, 74, 140].forEach(function (x) { ventilo(gpu.b, x, 12, 64, CYAN); });
-  var cache = boite({ x: 0, y: 129, z: 0, w: 294, h: 70, d: 140, nom: 'Alimentation|Cooler Master MWE 850 W 80 Plus Gold (sous le cache)',
-    fond: { h: 'radial-gradient(circle,#05090d 1.2px,#0000 1.6px) 0 0/6px 6px,#151d25', tout: '#121920' } });
-  var marque = el('span', 'etiquette', cache.av); marque.textContent = 'SHADOW V2'; marque.style.cssText += ';left:50%;top:50%;transform:translate(-50%,-50%);font-size:15px;letter-spacing:6px';
-  var radia = boite({ x: 8, y: -146, z: -8, w: 170, h: 18, d: 86, nom: 'Watercooling|Cooler Master Elite Liquid Series',
-    fond: { h: 'repeating-linear-gradient(90deg,#1b232b 0 2px,#0e1419 2px 4px)', b: '#0b1015', tout: '#1d252e' } });
-  [3, 87].forEach(function (x) { ventilo(radia.b, x, 3, 80, CYAN); });
-  [-58, -46].forEach(function (x) { boite({ x: x, y: -118, z: -46, w: 6, h: 38, d: 6, nom: 'Watercooling|Tuyaux de la pompe vers le radiateur', sans: ['h', 'b'], fond: { tout: '#0c1116' } }); });
+  boite({ x: -66, y: -14, z: MUR + 3, w: 56, h: 14, d: 3, nom: 'Stockage|SSD Samsung 990 EVO 1 To', sans: ['ar'],
+    fond: { av: 'linear-gradient(90deg,#1b1b20 0 18%,#2e3442 18% 75%,#c7cdd3 75% 82%,#1b1b20 82%)', tout: '#111' } });
+  var gpu = boite({ x: -32, y: 26, z: MUR + 2 + 44, w: 215, h: 40, d: 88, nom: 'Carte graphique|AMD Radeon RX 9070 XT 16 Go',
+    fond: { av: 'linear-gradient(165deg,#0000 0 52%,#b9bcc6 52% 55%,#0000 55%),linear-gradient(180deg,#2c2d35,#121318)', h: 'linear-gradient(150deg,#22232b 0 40%,#8d909a 40% 42%,#22232b 42%)', b: '#0b0b0f', tout: '#18191f' } });
+  var nomGpu = el('span', 'etiquette', gpu.av); nomGpu.textContent = 'RX 9070 XT'; nomGpu.style.cssText += ';left:14px;top:12px;color:#d6d8e0';
+  [8, 75, 142].forEach(function (x) { ventilo(gpu.b, x, 12, 64, '#3a3a46'); });
+  var ventFace = boite({ x: W / 2 - 12, y: 0, z: (MUR + D / 2) / 2 + 2, w: 4, h: H - 12, d: 104, nom: 'Façade|3 ventilateurs ARGB derrière la vitre', sans: ['av', 'ar', 'h', 'b'], fond: { tout: '#0000' } });
+  [20, 103, 186].forEach(function (y) { ventilo(ventFace.dr, 10, y, 84, y === 103 ? ROSE : VIO); ventilo(ventFace.g, 10, y, 84, y === 103 ? ROSE : VIO); });
+  var radia = boite({ x: 4, y: -H / 2 + 22, z: (MUR + D / 2) / 2 + 2, w: 258, h: 16, d: 88, nom: 'Watercooling|Cooler Master Elite Liquid Series, radiateur et ventilateurs du haut',
+    fond: { h: 'repeating-linear-gradient(90deg,#1b1b22 0 2px,#0c0c10 2px 4px)', b: '#0a0a0e', tout: '#1a1a21' } });
+  [3, 89, 175].forEach(function (x) { ventilo(radia.b, x, 3, 82, VIO); });
+  var bas = boite({ x: 4, y: H / 2 - 14, z: (MUR + D / 2) / 2 + 2, w: 258, h: 4, d: 88, nom: 'Ventilateurs du bas|3 ventilateurs ARGB en aspiration', sans: ['av', 'ar', 'g', 'dr'], fond: { tout: '#0000' } });
+  [3, 89, 175].forEach(function (x) { ventilo(bas.h, x, 3, 82, VIO); ventilo(bas.b, x, 3, 82, VIO); });
+  [-48, -36].forEach(function (x, i) {
+    boite({ x: x + i * 30, y: -105, z: MUR + 22 + i * 14, w: 7, h: 46, d: 7, nom: 'Watercooling|Tuyaux de la pompe vers le radiateur', sans: ['h', 'b'], fond: { tout: '#0b0b0e' } });
+  });
 
   // ombre au sol
   var ombre = el('div', 'ombre3d', scene); ombre.style.transform = 'translate3d(0,' + (H / 2 + 6) + 'px,0) rotateX(90deg)';
