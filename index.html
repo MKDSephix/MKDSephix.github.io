@@ -130,7 +130,7 @@ footer button:hover{color:var(--or-vif)}
 .manifeste .ligne:nth-child(-n+2){background:linear-gradient(90deg,#e6bd7114,transparent 70%)}
 .manifeste dt{font:700 12px var(--titre);letter-spacing:2px;text-transform:uppercase;color:var(--or)}
 .manifeste dd{margin:0;font-weight:700;font-size:16px}
-.manifeste dd small{display:block;font-weight:400;font-size:13px;color:var(--brume)}
+.manifeste dd small{display:block;color:var(--brume);font-weight:400;font-size:13px;color:var(--brume)}
 .manifeste .num{font:600 12px var(--corps);color:#e6bd7188;font-variant-numeric:tabular-nums}
 .pont{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 .poste{display:flex;flex-direction:column;gap:8px;padding:22px;border:1px solid var(--trait);border-radius:14px;background:linear-gradient(160deg,#16293bf0,#0e1d2cf0)}
@@ -149,10 +149,16 @@ footer button:hover{color:var(--or-vif)}
 /* ===== vitrine 3D du PC ===== */
 .salle{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:22px;align-items:stretch}
 .salle .manifeste .ligne{grid-template-columns:150px minmax(0,1fr) auto}
+.manifeste .amz{display:block;color:inherit;transition:color .2s}
+.manifeste .amz:hover{color:var(--or-vif)}
+.amz-fl{margin-left:8px;font-size:13px;color:var(--or)}
+.manifeste .ligne:has(.amz:hover){background:#e6bd710f}
+.v-info a{color:var(--or-vif);font-weight:700;margin-left:8px;pointer-events:auto}
 .vitrine{position:relative;min-height:500px;border:1px solid var(--trait);border-radius:14px;overflow:hidden;perspective:1300px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;outline:none;
   background:radial-gradient(ellipse 60% 50% at 50% 48%,#b44dff24,transparent 70%),linear-gradient(180deg,#10233466,#08131ef2),#0b1724}
 .vitrine:focus-visible{box-shadow:0 0 0 2px var(--cristal)}
-.vitrine.saisi{cursor:grabbing}
+.vitrine [data-nom]{cursor:pointer}
+.vitrine.saisi,.vitrine.saisi [data-nom]{cursor:grabbing}
 .scene3d{position:absolute;left:50%;top:45%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
 .boite{position:absolute;left:0;top:0;transform-style:preserve-3d}
 .face{position:absolute;background:#18222c}
@@ -296,21 +302,21 @@ footer button:hover{color:var(--or-vif)}
       <div class="v-tete"><span class="eyebrow">Vue 3D · Shadow V2</span>
         <div class="v-zoom"><button type="button" class="v-btn" id="v-moins" aria-label="Dézoomer">−</button><button type="button" class="v-btn" id="v-plus" aria-label="Zoomer">+</button></div></div>
       <div class="v-bas">
-        <div class="v-info vide" id="v-info" aria-live="polite">Glisse pour faire tourner le PC</div>
+        <div class="v-info vide" id="v-info" aria-live="polite">Glisse pour faire tourner le PC · clique une pièce pour la voir sur Amazon</div>
         <div class="v-vues">
           <button type="button" class="v-btn" data-vue="vitre">Vitre</button><button type="button" class="v-btn" data-vue="facade">Façade</button><button type="button" class="v-btn" data-vue="dos">Dos</button><button type="button" class="v-btn" data-vue="dessus">Dessus</button><button type="button" class="v-btn" id="v-auto" aria-pressed="true">Rotation auto</button>
         </div>
       </div>
     </div>
     <dl class="manifeste">
-      <div class="ligne"><dt>Carte graphique</dt><dd>AMD Radeon RX 9070 XT<small>16 Go de GDDR6</small></dd><span class="num">01</span></div>
-      <div class="ligne"><dt>Processeur</dt><dd>AMD Ryzen 7 9800X3D<small>8 cœurs, 3D V-Cache</small></dd><span class="num">02</span></div>
-      <div class="ligne"><dt>Carte mère</dt><dd>ASUS TUF Gaming B850-PLUS WIFI</dd><span class="num">03</span></div>
-      <div class="ligne"><dt>Mémoire vive</dt><dd>Lexar<small>32 Go DDR5</small></dd><span class="num">04</span></div>
-      <div class="ligne"><dt>Stockage</dt><dd>Samsung 990 EVO<small>SSD NVMe M.2 · 1 To</small></dd><span class="num">05</span></div>
-      <div class="ligne"><dt>Watercooling</dt><dd>Cooler Master Elite Liquid Series<small>Watercooling AIO</small></dd><span class="num">06</span></div>
-      <div class="ligne"><dt>Alimentation</dt><dd>Cooler Master MWE 850 Gold<small>850 W · 80 Plus Gold</small></dd><span class="num">07</span></div>
-      <div class="ligne"><dt>Boîtier</dt><dd>Cooler Master Elite 600</dd><span class="num">08</span></div>
+      <div class="ligne"><dt>Carte graphique</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=AMD+Radeon+RX+9070+XT+16+Go" target="_blank" rel="noopener sponsored">AMD Radeon RX 9070 XT<span class="amz-fl" aria-hidden="true">↗</span><small>16 Go de GDDR6</small></a></dd><span class="num">01</span></div>
+      <div class="ligne"><dt>Processeur</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=AMD+Ryzen+7+9800X3D" target="_blank" rel="noopener sponsored">AMD Ryzen 7 9800X3D<span class="amz-fl" aria-hidden="true">↗</span><small>8 cœurs, 3D V-Cache</small></a></dd><span class="num">02</span></div>
+      <div class="ligne"><dt>Carte mère</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=ASUS+TUF+Gaming+B850-PLUS+WIFI" target="_blank" rel="noopener sponsored">ASUS TUF Gaming B850-PLUS WIFI<span class="amz-fl" aria-hidden="true">↗</span></a></dd><span class="num">03</span></div>
+      <div class="ligne"><dt>Mémoire vive</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=Lexar+DDR5+32+Go" target="_blank" rel="noopener sponsored">Lexar<span class="amz-fl" aria-hidden="true">↗</span><small>32 Go DDR5</small></a></dd><span class="num">04</span></div>
+      <div class="ligne"><dt>Stockage</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=Samsung+990+EVO+1+To" target="_blank" rel="noopener sponsored">Samsung 990 EVO<span class="amz-fl" aria-hidden="true">↗</span><small>SSD NVMe M.2 · 1 To</small></a></dd><span class="num">05</span></div>
+      <div class="ligne"><dt>Watercooling</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=Cooler+Master+watercooling+Elite+Liquid" target="_blank" rel="noopener sponsored">Cooler Master Elite Liquid Series<span class="amz-fl" aria-hidden="true">↗</span><small>Watercooling AIO</small></a></dd><span class="num">06</span></div>
+      <div class="ligne"><dt>Alimentation</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=Cooler+Master+MWE+850+Gold" target="_blank" rel="noopener sponsored">Cooler Master MWE 850 Gold<span class="amz-fl" aria-hidden="true">↗</span><small>850 W · 80 Plus Gold</small></a></dd><span class="num">07</span></div>
+      <div class="ligne"><dt>Boîtier</dt><dd><a class="amz" href="https://www.amazon.fr/s?k=Cooler+Master+Elite+600" target="_blank" rel="noopener sponsored">Cooler Master Elite 600<span class="amz-fl" aria-hidden="true">↗</span></a></dd><span class="num">08</span></div>
     </dl>
     </div>
   </section>
@@ -457,10 +463,10 @@ footer button:hover{color:var(--or-vif)}
   zone(dos, 'left:80px;top:52px;width:30px;height:150px;background:repeating-linear-gradient(180deg,#30303a 0 7px,#0a0a0d 7px 13px);border-radius:3px');
   ventilo(dos, 120, 54, 84, VIO); zone(dos, 'left:120px;top:54px;width:84px;height:84px;background:' + hexa);
   zone(dos, 'left:80px;top:212px;width:125px;height:68px;background:repeating-linear-gradient(180deg,#26262e 0 9px,#0a0a0d 9px 13px)');
-  dos.setAttribute('data-nom', 'Arrière|Alimentation, connectique et ventilateur d’extraction');
+  dos.setAttribute('data-nom', 'Alimentation|Cooler Master MWE 850 W 80 Plus Gold, à l’arrière');
 
   // ---- l'intérieur
-  boite({ x: W / 2 - 4, y: 0, z: (MUR - D / 2) / 2, w: 2, h: H - 4, d: -MUR + D / 2 - 6 + 4, nom: 'Boîtier|Chambre arrière : alimentation et câbles', sans: ['av', 'ar', 'h', 'b'], fond: { dr: 'linear-gradient(180deg,#17171d,#0e0e12)', g: '#0e0e12' } });
+  boite({ x: W / 2 - 4, y: 0, z: (MUR - D / 2) / 2, w: 2, h: H - 4, d: -MUR + D / 2 - 6 + 4, nom: 'Alimentation|Cooler Master MWE 850 W 80 Plus Gold, dans la chambre arrière', sans: ['av', 'ar', 'h', 'b'], fond: { dr: 'linear-gradient(180deg,#17171d,#0e0e12)', g: '#0e0e12' } });
   boite({ x: 0, y: 0, z: MUR - 2, w: W - 6, h: H - 6, d: 2, sans: ['ar', 'h', 'b', 'g', 'dr'], fond: { av: 'radial-gradient(ellipse at 45% 40%,' + VIO + '33,#0000 65%),#0b0a0f' } });
   boite({ x: -33, y: -40, z: MUR + 2, w: 213, h: 172, d: 4, nom: 'Carte mère|ASUS TUF Gaming B850-PLUS WIFI', sans: ['ar'],
     fond: { av: 'linear-gradient(90deg,#0000 0 64%,#3a3a44 64% 67%,#0000 67%),repeating-linear-gradient(0deg,#0000 0 22px,#ffffff07 22px 23px),linear-gradient(180deg,#30303a 0 15%,#18181e 15%)', tout: '#121217' } });
@@ -476,12 +482,12 @@ footer button:hover{color:var(--or-vif)}
     fond: { av: 'linear-gradient(165deg,#0000 0 52%,#b9bcc6 52% 55%,#0000 55%),linear-gradient(180deg,#2c2d35,#121318)', h: 'linear-gradient(150deg,#22232b 0 40%,#8d909a 40% 42%,#22232b 42%)', b: '#0b0b0f', tout: '#18191f' } });
   var nomGpu = el('span', 'etiquette', gpu.av); nomGpu.textContent = 'RX 9070 XT'; nomGpu.style.cssText += ';left:14px;top:12px;color:#d6d8e0';
   [8, 75, 142].forEach(function (x) { ventilo(gpu.b, x, 12, 64, '#3a3a46'); });
-  var ventFace = boite({ x: W / 2 - 12, y: 0, z: (MUR + D / 2) / 2 + 2, w: 4, h: H - 12, d: 104, nom: 'Façade|3 ventilateurs ARGB derrière la vitre', sans: ['av', 'ar', 'h', 'b'], fond: { tout: '#0000' } });
+  var ventFace = boite({ x: W / 2 - 12, y: 0, z: (MUR + D / 2) / 2 + 2, w: 4, h: H - 12, d: 104, nom: 'Ventilateurs|3 ventilateurs ARGB derrière la vitre', sans: ['av', 'ar', 'h', 'b'], fond: { tout: '#0000' } });
   [20, 103, 186].forEach(function (y) { ventilo(ventFace.dr, 10, y, 84, y === 103 ? ROSE : VIO); ventilo(ventFace.g, 10, y, 84, y === 103 ? ROSE : VIO); });
   var radia = boite({ x: 4, y: -H / 2 + 22, z: (MUR + D / 2) / 2 + 2, w: 258, h: 16, d: 88, nom: 'Watercooling|Cooler Master Elite Liquid Series, radiateur et ventilateurs du haut',
     fond: { h: 'repeating-linear-gradient(90deg,#1b1b22 0 2px,#0c0c10 2px 4px)', b: '#0a0a0e', tout: '#1a1a21' } });
   [3, 89, 175].forEach(function (x) { ventilo(radia.b, x, 3, 82, VIO); });
-  var bas = boite({ x: 4, y: H / 2 - 14, z: (MUR + D / 2) / 2 + 2, w: 258, h: 4, d: 88, nom: 'Ventilateurs du bas|3 ventilateurs ARGB en aspiration', sans: ['av', 'ar', 'g', 'dr'], fond: { tout: '#0000' } });
+  var bas = boite({ x: 4, y: H / 2 - 14, z: (MUR + D / 2) / 2 + 2, w: 258, h: 4, d: 88, nom: 'Ventilateurs|3 ventilateurs ARGB en bas', sans: ['av', 'ar', 'g', 'dr'], fond: { tout: '#0000' } });
   [3, 89, 175].forEach(function (x) { ventilo(bas.h, x, 3, 82, VIO); ventilo(bas.b, x, 3, 82, VIO); });
   [-48, -36].forEach(function (x, i) {
     boite({ x: x + i * 30, y: -105, z: MUR + 22 + i * 14, w: 7, h: 46, d: 7, nom: 'Watercooling|Tuyaux de la pompe vers le radiateur', sans: ['h', 'b'], fond: { tout: '#0b0b0e' } });
@@ -499,9 +505,17 @@ footer button:hover{color:var(--or-vif)}
   function taille() { if (!vitrine.clientWidth) return; base = Math.min(1, vitrine.clientWidth / 560, (vitrine.clientHeight - (vitrine.clientWidth < 500 ? 190 : 110)) / 470); }
   function pose() { scene.style.transform = 'scale(' + (base * zoom).toFixed(3) + ') rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)'; }
   function borne(z) { return Math.max(.6, Math.min(2.2, z)); }
-  function montre(nom) {
-    if (!nom) { info.className = 'v-info vide'; info.textContent = 'Glisse pour faire tourner le PC'; return; }
+  var AMAZON = {'Carte graphique': 'https://www.amazon.fr/s?k=AMD+Radeon+RX+9070+XT+16+Go', 'Processeur': 'https://www.amazon.fr/s?k=AMD+Ryzen+7+9800X3D', 'Carte mère': 'https://www.amazon.fr/s?k=ASUS+TUF+Gaming+B850-PLUS+WIFI', 'Mémoire vive': 'https://www.amazon.fr/s?k=Lexar+DDR5+32+Go', 'Stockage': 'https://www.amazon.fr/s?k=Samsung+990+EVO+1+To', 'Watercooling': 'https://www.amazon.fr/s?k=Cooler+Master+watercooling+Elite+Liquid', 'Alimentation': 'https://www.amazon.fr/s?k=Cooler+Master+MWE+850+Gold', 'Boîtier': 'https://www.amazon.fr/s?k=Cooler+Master+Elite+600', 'Ventilateurs': 'https://www.amazon.fr/s?k=Cooler+Master+ventilateur+ARGB+120+mm'};
+  function lien(nom) { return nom ? AMAZON[nom.split('|')[0]] : null; }
+  function ouvre(nom) { var u = lien(nom); if (u) window.open(u, '_blank', 'noopener'); }
+  var montre_nom = null;
+  function montre(nom, tactile) {
+    montre_nom = nom;
+    if (!nom) { info.className = 'v-info vide'; info.textContent = 'Glisse pour faire tourner le PC · clique une pièce pour la voir sur Amazon'; return; }
     var p = nom.split('|'); info.className = 'v-info'; info.innerHTML = ''; var b = el('b', '', info); b.textContent = p[0]; info.appendChild(document.createTextNode(p[1]));
+    var u = lien(nom); if (!u) return;
+    if (tactile) { var a = el('a', '', info); a.href = u; a.target = '_blank'; a.rel = 'noopener sponsored'; a.textContent = 'Voir sur Amazon ↗'; a.addEventListener('pointerdown', function (e) { e.stopPropagation(); }); }
+    else { var i = el('span', 'amz-fl', info); i.textContent = 'Amazon ↗'; }
   }
   function nomSous(t) { var n = t && t.closest && t.closest('[data-nom]'); return n ? n.getAttribute('data-nom') : null; }
 
@@ -523,7 +537,7 @@ footer button:hover{color:var(--or-vif)}
   else demarre();
 
   vitrine.addEventListener('pointerdown', function (e) {
-    if (e.target.closest('button')) return;
+    if (e.target.closest('button,a')) return;
     vitrine.setPointerCapture(e.pointerId); points[e.pointerId] = { x: e.clientX, y: e.clientY };
     vitrine.classList.add('saisi'); cible = null; vx = vy = 0; bouge = 0; actif = true; dernier = e.target;
     var ids = Object.keys(points);
@@ -546,7 +560,7 @@ footer button:hover{color:var(--or-vif)}
   function lache(e) {
     if (!points[e.pointerId]) return;
     delete points[e.pointerId]; ecart0 = 0;
-    if (!Object.keys(points).length) { vitrine.classList.remove('saisi'); repos = performance.now(); if (bouge < 6) { vx = vy = 0; montre(nomSous(dernier)); } }
+    if (!Object.keys(points).length) { vitrine.classList.remove('saisi'); repos = performance.now(); if (bouge < 6) { vx = vy = 0; var n = nomSous(dernier); if (e.pointerType === 'mouse') ouvre(n); else if (n && n === montre_nom) ouvre(n); else montre(n, true); } }
     if (calme) vx = vy = 0;
   }
   vitrine.addEventListener('pointerup', lache); vitrine.addEventListener('pointercancel', lache);
