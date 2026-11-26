@@ -146,12 +146,45 @@ footer button:hover{color:var(--or-vif)}
 .copier{appearance:none;border:0;cursor:pointer;padding:14px 22px;border-radius:999px;background:var(--or);color:#1a1208;font:800 15px var(--corps);box-shadow:0 8px 22px #0008;transition:transform .2s,background .2s}
 .copier:hover{transform:translateY(-2px);background:var(--or-vif)}
 .copie-ok{font-size:13px;color:var(--cristal);min-height:1.2em}
+/* ===== vitrine 3D du PC ===== */
+.salle{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:22px;align-items:stretch}
+.salle .manifeste .ligne{grid-template-columns:150px minmax(0,1fr) auto}
+.vitrine{position:relative;min-height:500px;border:1px solid var(--trait);border-radius:14px;overflow:hidden;perspective:1300px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;outline:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 48%,#6fd8f022,transparent 70%),linear-gradient(180deg,#10233466,#08131ef2),#0b1724}
+.vitrine:focus-visible{box-shadow:0 0 0 2px var(--cristal)}
+.vitrine.saisi{cursor:grabbing}
+.scene3d{position:absolute;left:50%;top:45%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.boite{position:absolute;left:0;top:0;transform-style:preserve-3d}
+.face{position:absolute;background:#18222c}
+.ombre3d{position:absolute;width:420px;height:240px;left:-210px;top:-120px;border-radius:50%;background:radial-gradient(closest-side,#000c,#0000);pointer-events:none}
+.v-tete{position:absolute;top:14px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;pointer-events:none;z-index:2}
+.v-tete .eyebrow{font-size:11px}
+.v-zoom{display:flex;gap:6px;pointer-events:auto}
+.v-btn{appearance:none;border:1px solid var(--trait);background:#08131ecc;color:var(--texte);font:700 13px var(--corps);border-radius:999px;padding:7px 13px;cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.v-btn:hover{border-color:var(--or);color:var(--or-vif)}
+.v-btn[aria-pressed="true"]{background:var(--or);color:#1a1208;border-color:var(--or)}
+.v-zoom .v-btn{width:34px;height:34px;padding:0}
+.v-bas{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:2;pointer-events:none}
+.v-vues{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;pointer-events:auto}
+.v-info{min-height:32px;padding:6px 14px;border-radius:999px;background:#08131ee6;border:1px solid #6fd8f055;font-size:13px;color:var(--texte);text-align:center;transition:opacity .2s}
+.v-info b{color:var(--or);font:700 11px var(--titre);letter-spacing:1.5px;text-transform:uppercase;margin-right:6px}
+.v-info.vide{opacity:.75;color:var(--brume);border-color:var(--trait)}
+/* matières */
+.ventilo{position:absolute;border-radius:50%;border:3px solid var(--rgb,#6fd8f0);background:radial-gradient(circle,#0d141b 0 55%,#121c26);box-shadow:0 0 14px var(--rgb,#6fd8f0),inset 0 0 12px var(--rgb,#6fd8f0)}
+.helice{position:absolute;inset:9%;border-radius:50%;background:radial-gradient(circle,#2b3947 0 17%,#0000 18%),repeating-conic-gradient(from 0deg,#24313d 0 26deg,#0000 26deg 51.43deg);animation:tourne 1.1s linear infinite}
+@keyframes tourne{to{transform:rotate(360deg)}}
+.maille{position:absolute;inset:0;background:radial-gradient(circle,#05090dcc 1.3px,#0000 1.7px) 0 0/5px 5px}
+.vitre{pointer-events:none;border:7px solid #0a0f15;border-radius:4px;background:linear-gradient(118deg,#ffffff1c 0%,#9fd6f00a 28%,#0000 45%,#ffffff12 58%,#9fd6f008 72%,#ffffff14 100%)}
+.etiquette{position:absolute;font:800 11px var(--corps);letter-spacing:3px;color:#e6bd71cc;white-space:nowrap}
 @media (max-width:900px){
   .setup-vue{padding:24px 20px 30px;gap:40px}
   .s-hero{grid-template-columns:1fr;gap:24px}
   .chiffres,.pont{grid-template-columns:repeat(2,minmax(0,1fr))}
   .manifeste .ligne{grid-template-columns:1fr auto;gap:4px 14px}
   .manifeste dt{grid-column:1/-1}
+  .salle{grid-template-columns:1fr}
+  .salle .manifeste .ligne{grid-template-columns:1fr auto}
+  .vitrine{min-height:540px}
 }
 @media (max-width:420px){.chiffres,.pont{grid-template-columns:1fr}.poste.maison{grid-column:auto!important}.onglets a{padding:7px 12px}}
 @media (max-width:900px){
@@ -254,7 +287,19 @@ footer button:hover{color:var(--or-vif)}
   <section class="bloc" id="pc">
     <div class="bloc-tete">
       <div><div class="eyebrow">01 · La salle des machines</div><h2>Ce qui fait tourner les jeux.</h2></div>
-      <p>Mon PC, c’est le Shadow V2 de FlowUP : voici chaque pièce.</p>
+      <p>Mon PC, c’est le Shadow V2 de FlowUP. Fais-le tourner dans tous les sens, puis touche une pièce pour voir ce que c’est.</p>
+    </div>
+    <div class="salle">
+    <div class="vitrine" id="vitrine" tabindex="0" role="img" aria-label="Modèle 3D du PC Shadow V2, à faire tourner à la souris, au doigt ou avec les flèches du clavier">
+      <div class="scene3d" id="scene3d"></div>
+      <div class="v-tete"><span class="eyebrow">Vue 3D · Shadow V2</span>
+        <div class="v-zoom"><button type="button" class="v-btn" id="v-moins" aria-label="Dézoomer">−</button><button type="button" class="v-btn" id="v-plus" aria-label="Zoomer">+</button></div></div>
+      <div class="v-bas">
+        <div class="v-info vide" id="v-info" aria-live="polite">Glisse pour faire tourner le PC</div>
+        <div class="v-vues">
+          <button type="button" class="v-btn" data-vue="vitre">Vitre</button><button type="button" class="v-btn" data-vue="facade">Façade</button><button type="button" class="v-btn" data-vue="dos">Dos</button><button type="button" class="v-btn" data-vue="dessus">Dessus</button><button type="button" class="v-btn" id="v-auto" aria-pressed="true">Rotation auto</button>
+        </div>
+      </div>
     </div>
     <dl class="manifeste">
       <div class="ligne"><dt>Carte graphique</dt><dd>AMD Radeon RX 9070 XT<small>16 Go de GDDR6</small></dd><span class="num">01</span></div>
@@ -266,6 +311,7 @@ footer button:hover{color:var(--or-vif)}
       <div class="ligne"><dt>Alimentation</dt><dd>Cooler Master MWE 850 Gold<small>850 W · 80 Plus Gold</small></dd><span class="num">07</span></div>
       <div class="ligne"><dt>Boîtier</dt><dd>Cooler Master Elite 600</dd><span class="num">08</span></div>
     </dl>
+    </div>
   </section>
 
   <section class="bloc" id="stream">
@@ -358,6 +404,169 @@ footer button:hover{color:var(--or-vif)}
   // la banane, évidemment
   var b = document.getElementById('banane'), s = b.querySelector('.banane');
   b.addEventListener('click', function () { s.classList.remove('tourne'); void s.offsetWidth; s.classList.add('tourne'); });
+})();
+</script>
+<script>
+// vitrine 3D du PC Shadow V2 : modèle en CSS 3D, sans bibliothèque
+(function () {
+  var scene = document.getElementById('scene3d'), vitrine = document.getElementById('vitrine');
+  if (!scene) return;
+  var info = document.getElementById('v-info'), btnAuto = document.getElementById('v-auto');
+  var calme = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var CYAN = '#6fd8f0', OR = '#e6bd71';
+
+  function el(tag, cls, parent) { var e = document.createElement(tag); if (cls) e.className = cls; if (parent) parent.appendChild(e); return e; }
+  function ventilo(face, x, y, d, c) {
+    var v = el('div', 'ventilo', face); v.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + d + 'px;height:' + d + 'px;--rgb:' + (c || CYAN);
+    el('i', 'helice', v); return v;
+  }
+  // une boîte : x vers la droite, y vers le bas, z vers toi ; w × h × d
+  function boite(o) {
+    var b = el('div', 'boite', o.parent || scene);
+    b.style.transform = 'translate3d(' + (o.x || 0) + 'px,' + (o.y || 0) + 'px,' + (o.z || 0) + 'px)';
+    if (o.nom) b.setAttribute('data-nom', o.nom);
+    var w = o.w, h = o.h, d = o.d, F = {
+      av: [w, h, 'translateZ(' + d / 2 + 'px)'], ar: [w, h, 'rotateY(180deg) translateZ(' + d / 2 + 'px)'],
+      dr: [d, h, 'rotateY(90deg) translateZ(' + w / 2 + 'px)'], g: [d, h, 'rotateY(-90deg) translateZ(' + w / 2 + 'px)'],
+      h: [w, d, 'rotateX(90deg) translateZ(' + h / 2 + 'px)'], b: [w, d, 'rotateX(-90deg) translateZ(' + h / 2 + 'px)']
+    }, faces = {};
+    Object.keys(F).forEach(function (k) {
+      if (o.sans && o.sans.indexOf(k) >= 0) return;
+      var f = el('div', 'face', b);
+      f.style.cssText = 'width:' + F[k][0] + 'px;height:' + F[k][1] + 'px;left:' + (-F[k][0] / 2) + 'px;top:' + (-F[k][1] / 2) + 'px;transform:' + F[k][2] +
+        ';background:' + ((o.fond && (o.fond[k] || o.fond.tout)) || '#18222c');
+      faces[k] = f;
+    });
+    return faces;
+  }
+
+  // ---- le boîtier (Elite 600) : façade à droite (x+), vitre vers toi (z+)
+  var W = 300, H = 330, D = 150;
+  var boitier = boite({ w: W, h: H, d: D, nom: 'Boîtier|Cooler Master Elite 600', sans: [],
+    fond: { ar: 'radial-gradient(circle at 65% 40%,#6fd8f026,#0000 60%),#0b1118', g: '#0f161d', h: '#121a22cc', b: '#0b1015', dr: '#0a0f14e6' } });
+  boitier.av.className = 'face vitre'; boitier.av.style.background = '';
+  // façade mesh + 3 ventilos ARGB
+  [22, 118, 214].forEach(function (y) { ventilo(boitier.dr, 33, y, 84); });
+  el('div', 'maille', boitier.dr); boitier.dr.setAttribute('data-nom', 'Façade|Mesh et ventilateurs ARGB');
+  // dessus : grille
+  el('div', 'maille', boitier.h);
+  // dos : ventilo d'extraction, I/O, équerres PCIe, alimentation
+  ventilo(boitier.g, 33, 28, 84);
+  var io = el('div', '', boitier.g); io.style.cssText = 'position:absolute;left:96px;top:40px;width:34px;height:110px;background:repeating-linear-gradient(180deg,#2a3540 0 6px,#0b1015 6px 12px);border-radius:3px';
+  var pcie = el('div', '', boitier.g); pcie.style.cssText = 'position:absolute;left:20px;top:165px;width:110px;height:78px;background:repeating-linear-gradient(180deg,#26313b 0 7px,#0b1015 7px 10px)';
+  var psu = el('div', '', boitier.g); psu.style.cssText = 'position:absolute;left:25px;top:262px;width:100px;height:56px;border-radius:4px;background:radial-gradient(circle,#05090d 1.4px,#0000 1.8px) 0 0/6px 6px,#1d2731';
+  boitier.g.setAttribute('data-nom', 'Arrière|Ventilateur d’extraction et connectique');
+
+  // ---- l'intérieur
+  var mobo = boite({ x: -40, y: -64, z: -64, w: 213, h: 172, d: 4, nom: 'Carte mère|ASUS TUF Gaming B850-PLUS WIFI', sans: ['ar'],
+    fond: { av: 'linear-gradient(90deg,#0000 0 63%,#2a333c 63% 66%,#0000 66%),repeating-linear-gradient(0deg,#0000 0 22px,#ffffff08 22px 23px),linear-gradient(180deg,#2d3843 0 16%,#151d25 16%)', tout: '#11181f' } });
+  boite({ x: -66, y: -96, z: -52, w: 44, h: 44, d: 18, nom: 'Processeur|AMD Ryzen 7 9800X3D (sous la pompe du watercooling)',
+    fond: { av: 'radial-gradient(circle,#0000 0 40%,' + OR + ' 42% 47%,#0000 50%),radial-gradient(circle,#ffd98c55,#0000 70%),#141c24', tout: '#1d2731' } });
+  [-12, -4].forEach(function (x) {
+    boite({ x: x, y: -82, z: -50, w: 5, h: 94, d: 24, nom: 'Mémoire vive|Lexar 32 Go DDR5',
+      fond: { av: OR, tout: '#2a3440' } }).av.style.boxShadow = '0 0 10px ' + OR;
+  });
+  boite({ x: -66, y: -32, z: -60, w: 56, h: 15, d: 3, nom: 'Stockage|SSD Samsung 990 EVO 1 To',
+    fond: { av: 'linear-gradient(90deg,#1b1f24 0 18%,#2c3a48 18% 75%,#c7cdd3 75% 82%,#1b1f24 82%)', tout: '#11161b' } });
+  var gpu = boite({ x: -40, y: 12, z: -18, w: 213, h: 38, d: 88, nom: 'Carte graphique|AMD Radeon RX 9070 XT 16 Go',
+    fond: { av: 'linear-gradient(180deg,#2b3540,#141b22)', h: 'repeating-linear-gradient(90deg,#1f2830 0 10px,#222c35 10px 12px)', b: '#0e141a', tout: '#1a222a' } });
+  var bande = el('div', '', gpu.av); bande.style.cssText = 'position:absolute;left:0;right:0;bottom:6px;height:3px;background:' + CYAN + ';box-shadow:0 0 10px ' + CYAN;
+  var nomGpu = el('span', 'etiquette', gpu.av); nomGpu.textContent = 'RX 9070 XT'; nomGpu.style.cssText += ';right:14px;top:9px';
+  [8, 74, 140].forEach(function (x) { ventilo(gpu.b, x, 12, 64, CYAN); });
+  var cache = boite({ x: 0, y: 129, z: 0, w: 294, h: 70, d: 140, nom: 'Alimentation|Cooler Master MWE 850 W 80 Plus Gold (sous le cache)',
+    fond: { h: 'radial-gradient(circle,#05090d 1.2px,#0000 1.6px) 0 0/6px 6px,#151d25', tout: '#121920' } });
+  var marque = el('span', 'etiquette', cache.av); marque.textContent = 'SHADOW V2'; marque.style.cssText += ';left:50%;top:50%;transform:translate(-50%,-50%);font-size:15px;letter-spacing:6px';
+  var radia = boite({ x: 8, y: -146, z: -8, w: 170, h: 18, d: 86, nom: 'Watercooling|Cooler Master Elite Liquid Series',
+    fond: { h: 'repeating-linear-gradient(90deg,#1b232b 0 2px,#0e1419 2px 4px)', b: '#0b1015', tout: '#1d252e' } });
+  [3, 87].forEach(function (x) { ventilo(radia.b, x, 3, 80, CYAN); });
+  [-58, -46].forEach(function (x) { boite({ x: x, y: -118, z: -46, w: 6, h: 38, d: 6, nom: 'Watercooling|Tuyaux de la pompe vers le radiateur', sans: ['h', 'b'], fond: { tout: '#0c1116' } }); });
+
+  // ombre au sol
+  var ombre = el('div', 'ombre3d', scene); ombre.style.transform = 'translate3d(0,' + (H / 2 + 6) + 'px,0) rotateX(90deg)';
+
+  // ---- interaction
+  var DEF = { rx: -14, ry: -32 }, VUES = { vitre: [-10, -22], facade: [-8, -90], dos: [-8, 90], dessus: [-78, -20] };
+  var rx = DEF.rx, ry = DEF.ry, zoom = 1, base = 1, vx = 0, vy = 0, cible = null, auto = !calme, repos = 0, tourne = false;
+  var points = {}, ecart0 = 0, zoom0 = 1, bouge = 0, dernier = null, actif = false;
+  if (calme) btnAuto.setAttribute('aria-pressed', 'false');
+
+  function taille() { if (!vitrine.clientWidth) return; base = Math.min(1, vitrine.clientWidth / 560, (vitrine.clientHeight - (vitrine.clientWidth < 500 ? 190 : 110)) / 470); }
+  function pose() { scene.style.transform = 'scale(' + (base * zoom).toFixed(3) + ') rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)'; }
+  function borne(z) { return Math.max(.6, Math.min(2.2, z)); }
+  function montre(nom) {
+    if (!nom) { info.className = 'v-info vide'; info.textContent = 'Glisse pour faire tourner le PC'; return; }
+    var p = nom.split('|'); info.className = 'v-info'; info.innerHTML = ''; var b = el('b', '', info); b.textContent = p[0]; info.appendChild(document.createTextNode(p[1]));
+  }
+  function nomSous(t) { var n = t && t.closest && t.closest('[data-nom]'); return n ? n.getAttribute('data-nom') : null; }
+
+  function boucle() {
+    if (!tourne) return;
+    if (cible) {
+      var dy = ((cible[1] - ry) % 360 + 540) % 360 - 180, dx = cible[0] - rx;
+      rx += dx * .12; ry += dy * .12;
+      if (Math.abs(dx) < .1 && Math.abs(dy) < .1) { rx = cible[0]; ry = cible[1]; cible = null; }
+    } else if (!Object.keys(points).length) {
+      if (Math.abs(vx) > .01 || Math.abs(vy) > .01) { ry += vx; rx += vy; vx *= .93; vy *= .93; }
+      else if (auto && performance.now() - repos > 2500) ry += .18;
+    }
+    pose(); requestAnimationFrame(boucle);
+  }
+  function demarre() { taille(); if (!tourne) { tourne = true; requestAnimationFrame(boucle); } }
+  function arrete() { tourne = false; }
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { e[0].isIntersecting ? demarre() : arrete(); }).observe(vitrine);
+  else demarre();
+
+  vitrine.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('button')) return;
+    vitrine.setPointerCapture(e.pointerId); points[e.pointerId] = { x: e.clientX, y: e.clientY };
+    vitrine.classList.add('saisi'); cible = null; vx = vy = 0; bouge = 0; actif = true; dernier = e.target;
+    var ids = Object.keys(points);
+    if (ids.length === 2) { var a = points[ids[0]], b = points[ids[1]]; ecart0 = Math.hypot(a.x - b.x, a.y - b.y); zoom0 = zoom; }
+  });
+  vitrine.addEventListener('pointermove', function (e) {
+    var p = points[e.pointerId];
+    if (!p) { if (e.pointerType === 'mouse') montre(nomSous(e.target)); return; }
+    var dx = e.clientX - p.x, dy = e.clientY - p.y, ids = Object.keys(points);
+    p.x = e.clientX; p.y = e.clientY; bouge += Math.abs(dx) + Math.abs(dy);
+    if (ids.length === 2) {
+      var a = points[ids[0]], b = points[ids[1]];
+      if (ecart0) zoom = borne(zoom0 * Math.hypot(a.x - b.x, a.y - b.y) / ecart0);
+    } else {
+      var sens = Math.cos(rx * Math.PI / 180) < 0 ? -1 : 1;
+      vx = dx * .4 * sens; vy = -dy * .4; ry += vx; rx += vy;
+    }
+    repos = performance.now(); pose();
+  });
+  function lache(e) {
+    if (!points[e.pointerId]) return;
+    delete points[e.pointerId]; ecart0 = 0;
+    if (!Object.keys(points).length) { vitrine.classList.remove('saisi'); repos = performance.now(); if (bouge < 6) { vx = vy = 0; montre(nomSous(dernier)); } }
+    if (calme) vx = vy = 0;
+  }
+  vitrine.addEventListener('pointerup', lache); vitrine.addEventListener('pointercancel', lache);
+  vitrine.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && !points[e.pointerId]) montre(null); });
+  // la molette zoome seulement une fois qu'on a pris le PC en main, pour ne pas bloquer le défilement de la page
+  vitrine.addEventListener('wheel', function (e) {
+    if (!actif) return; e.preventDefault(); zoom = borne(zoom * Math.exp(-e.deltaY * .0015)); repos = performance.now(); pose();
+  }, { passive: false });
+  vitrine.addEventListener('dblclick', function () { cible = [DEF.rx, DEF.ry]; zoom = 1; });
+  vitrine.addEventListener('keydown', function (e) {
+    var k = e.key, pas = 12;
+    if (k === 'ArrowLeft') ry -= pas; else if (k === 'ArrowRight') ry += pas; else if (k === 'ArrowUp') rx += pas; else if (k === 'ArrowDown') rx -= pas;
+    else if (k === '+' || k === '=') zoom = borne(zoom * 1.15); else if (k === '-') zoom = borne(zoom / 1.15);
+    else if (k === '0') { cible = [DEF.rx, DEF.ry]; zoom = 1; } else return;
+    e.preventDefault(); repos = performance.now(); pose();
+  });
+  document.getElementById('v-plus').addEventListener('click', function () { zoom = borne(zoom * 1.2); pose(); });
+  document.getElementById('v-moins').addEventListener('click', function () { zoom = borne(zoom / 1.2); pose(); });
+  [].forEach.call(document.querySelectorAll('[data-vue]'), function (b) {
+    b.addEventListener('click', function () { var v = VUES[b.getAttribute('data-vue')]; cible = [v[0], v[1]]; repos = performance.now(); demarre(); if (calme) { rx = v[0]; ry = v[1]; cible = null; pose(); } });
+  });
+  btnAuto.addEventListener('click', function () { auto = !auto; btnAuto.setAttribute('aria-pressed', auto ? 'true' : 'false'); repos = 0; });
+
+  addEventListener('resize', function () { taille(); pose(); });
+  addEventListener('hashchange', function () { setTimeout(function () { taille(); pose(); }, 0); });
+  taille(); pose();
 })();
 </script>
 </body>
